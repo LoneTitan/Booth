@@ -86,12 +86,11 @@ def main():
 
     ac = "00000000000000000000000000000000"
     q_npo = '0'
-    counter = 5
+    counter = 32
     while not counter == 0:
-        print(ac[-4:] , a_bin[-4:] , q_npo)
+        print(ac , a_bin , q_npo)
         counter = counter - 1;
         if(a_bin[-1] == '1' and  q_npo ==  '0'):
-            print(twosComplement(b_bin))
             ac = binaryAdd(ac,twosComplement(b_bin))
         elif(a_bin[-1] == '0' and  q_npo ==  '1'):
             ac = binaryAdd(ac,b_bin)
@@ -104,6 +103,13 @@ def main():
         a_bin = last + a_bin
         ac = rightShift(ac)
         a_bin = rightShift(a_bin)
-    print(a_bin[-4:])
+    if((a < 0 and b < 0) or (a > 0 and b > 0)):
+        a_bin = '0' + a_bin[2:]
+    if((a < 0 and b > 0) or (a > 0 and b < 0)):
+        a_bin = '1' + a_bin[2:]
+    if(a_bin[0] == '1'):
+        print('-' + str(int('0'+a_bin[2:], 2)))
+    else:
+        print(int('0'+a_bin[2:], 2))
+
 main()
-print(binaryAdd("1001","1"))
