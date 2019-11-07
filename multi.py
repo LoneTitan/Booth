@@ -5,14 +5,16 @@ def dtb(i):
     while(temp > 0):
         ans = str(temp%2) + ans ;
         temp = temp//2;
-    print(ans);
+    for i in range(len(ans), 31):
+        ans = '0' + ans
+    return(ans);
 
 #Perform left shift  operation
-def leftShift(i):
+def rightShift(i):
     return i[:-1]
 
 #Perform Right shift operation
-def rightShift(i):
+def leftShift(i):
     return i+"0"
 
 #Take ones complement
@@ -51,18 +53,57 @@ def binaryAdd(i,j):
         elif ((s == '0' and t == '1') or (s == '1' and t == '0')) and not carry:
             ans = ans + "1"
         elif ((s == '0' and t == '1') or (s == '1' and t == '0')) and carry:
-            ans = ans + "1"
-            carry = False;
-        else:
-            print(ans)
-
+            ans = ans + "0"
+            carry = True;
     if carry:
         ans = ans + "1"
     ans = ans[::-1]
     return ans
 
-#Calculate twos complement    
+#Calculate twos complement
 def twosComplement(i):
     temp = onesComplement(i)
     return binaryAdd(temp, "1")
-print(binaryAdd("000","000"))
+
+def main():
+    a = int(input())
+    b = int(input())
+
+    a_bin = dtb(abs(a));
+    b_bin = dtb(abs(b));
+
+    #Normalise the binary
+    maxlen = max(len(a_bin), len(b_bin)) - 1;
+    if(a < 0):
+        a_bin = "1" + a_bin
+    else:
+        a_bin = "0" + a_bin
+    if(b < 0):
+        b_bin = "1" + b_bin
+    else:
+        b_bin = "0" + b_bin
+    #Normalisation done
+
+    ac = "00000000000000000000000000000000"
+    q_npo = '0'
+    counter = 5
+    while not counter == 0:
+        print(ac[-4:] , a_bin[-4:] , q_npo)
+        counter = counter - 1;
+        if(a_bin[-1] == '1' and  q_npo ==  '0'):
+            print(twosComplement(b_bin))
+            ac = binaryAdd(ac,twosComplement(b_bin))
+        elif(a_bin[-1] == '0' and  q_npo ==  '1'):
+            ac = binaryAdd(ac,b_bin)
+        q_npo = a_bin[-1]
+        last = ac[-1]
+        if(ac[0] == '0'):
+            ac = '0' + ac
+        else:
+            ac = '1' + ac
+        a_bin = last + a_bin
+        ac = rightShift(ac)
+        a_bin = rightShift(a_bin)
+    print(a_bin[-4:])
+main()
+print(binaryAdd("1001","1"))
