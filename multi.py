@@ -122,6 +122,7 @@ def main():
     print(ans)
     if(ans[0] == '1'):
         ans = twosComplement(ans)
+        print("-", end = "")
     print(int(ans, 2))
 
 main()
