@@ -62,6 +62,7 @@ def twosComplement(i):
     return binaryAdd(temp, "1")
 
 def main():
+    print("Enter the numbers to be multiplied")
     a = int(input())
     b = int(input())
 
@@ -84,7 +85,7 @@ def main():
         b_bin = twosComplement(b_bin)
 
     maxlen = max(len(a_bin), len(b_bin));
-    print(a_bin + "   " + b_bin)
+    #print(a_bin + "   " + b_bin)
     #Normalisation done
     ac = ''
     for p in range(0,maxlen):
@@ -94,7 +95,7 @@ def main():
 
     while not counter == 0:
         #Printing values
-        print(ac , a_bin , q_npo, counter)
+        #print(ac , a_bin , q_npo, counter)
         counter = counter - 1;
 
         #FlowChart condition 1
@@ -103,7 +104,7 @@ def main():
         #FlowChart condition 2
         elif(a_bin[-1] == '0' and  q_npo ==  '1'):
             ac = binaryAdd(ac,b_bin)
-            print(ac)
+            #print(ac)
         ac = ac[-maxlen:]
         #Shifting
         q_npo = a_bin[-1]
@@ -117,13 +118,21 @@ def main():
         a_bin = last + a_bin
         ac = rightShift(ac)
         a_bin = rightShift(a_bin)
-    print(ac + "   " + a_bin)
+    #print(ac + "   " + a_bin)
     ans = ac + a_bin
-    print(ans)
+    neg = False;
+    #If ans = -
     if(ans[0] == '1'):
         ans = twosComplement(ans)
-        print("-", end = "")
-    print(int(ans, 2))
+        neg = True;
+    file = open('output.txt', 'w')
+    if(neg):
+        ans1 = twosComplement(ans)
+        a = int(ans, 2)
+        file.write("Answer in Binary(2's complement) is : " + ans + " Answer in Decimal is : - " + str(a) )
+    else:
+        a = int(ans,2)
+        file.write("Answer in Binary is : " + ans + " Answer in Decimal is : + " + str(a) )
+    file.close()
 
 main()
-#print(binaryAdd("1110","0111"))
